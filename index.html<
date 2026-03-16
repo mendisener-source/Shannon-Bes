@@ -1,0 +1,275 @@
+Content is user-generated and unverified.
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0c0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BES Takip">
+<title>BES Takip</title>
+<link rel="manifest" id="manifest-link">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--surface:#111417;--card:#161a1f;--border:#1e2530;
+  --accent:#a78bfa;--green:#00ff88;--red:#ff3860;--yellow:#ffd600;
+  --text:#e0e8f0;--muted:#5a6a7a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
+body{padding-bottom:80px}
+header{position:sticky;top:0;z-index:100;background:#0d1117;border-bottom:1px solid var(--accent);
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 20px rgba(167,139,250,.15)}
+.h-title{font-size:18px;font-weight:700;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--accent),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.h-sub{font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace}
+.h-total{font-size:22px;font-weight:700;font-family:'Share Tech Mono',monospace;color:var(--accent)}
+.h-label{font-size:10px;color:var(--muted);text-align:right}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+.inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'Share Tech Mono',monospace;font-size:28px;
+  padding:12px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s;text-align:center}
+.inp:focus{border-color:var(--accent)}
+.inp-label{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px;text-align:center}
+.btn{width:100%;padding:14px;border-radius:10px;border:1px solid var(--accent);
+  background:rgba(167,139,250,.1);color:var(--accent);font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
+.btn.green{border-color:var(--green);color:var(--green);background:rgba(0,255,136,.08)}
+.btn.red{border-color:var(--red);color:var(--red);background:rgba(255,56,96,.08)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.stat-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.stat-val{font-family:'Share Tech Mono',monospace;font-size:18px;margin-top:4px}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--muted)}
+.history-row{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.history-row:last-child{border-bottom:none}
+.history-date{font-size:12px;color:var(--muted)}
+.history-val{font-family:'Share Tech Mono',monospace;font-size:15px}
+.history-change{font-size:12px;font-family:'Share Tech Mono',monospace}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);margin:16px 12px 8px;display:flex;align-items:center;gap:8px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* Basit grafik */
+.chart-wrap{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px;overflow:hidden}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:80px}
+.chart-bar{flex:1;border-radius:3px 3px 0 0;min-height:4px;transition:height .3s}
+.chart-label{display:flex;justify-content:space-between;margin-top:4px}
+.chart-lbl{font-size:9px;color:var(--muted);flex:1;text-align:center;overflow:hidden;white-space:nowrap}
+#alert-banner{position:fixed;top:0;left:0;right:0;z-index:999;padding:14px 16px;
+  font-size:14px;font-weight:700;display:none;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+#alert-banner.ok{background:var(--green);color:#000}
+#alert-banner.err{background:var(--red);color:#fff}
+.alert-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;cursor:pointer}
+.fab{position:fixed;bottom:20px;right:16px;z-index:200;width:54px;height:54px;
+  border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#7c3aed);
+  color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(167,139,250,.4);
+  display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+
+<div id="alert-banner">
+  <span id="alert-text"></span>
+  <span class="alert-close" onclick="closeAlert()">✕</span>
+</div>
+
+<header>
+  <div>
+    <div class="h-title">BES TAKİP</div>
+    <div class="h-sub" id="last-entry">Son giriş: —</div>
+  </div>
+  <div>
+    <div class="h-label">TOPLAM</div>
+    <div class="h-total" id="header-total">—</div>
+  </div>
+</header>
+
+<!-- Yeni Giriş -->
+<div class="card" style="margin-top:12px">
+  <label class="inp-label">GÜNCEL BES DEĞERİ (₺)</label>
+  <input class="inp" type="number" inputmode="decimal" step="0.01" placeholder="0.00" id="bes-input">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+    <button class="btn" onclick="saveEntry()">💾 KAYDET</button>
+    <button class="btn green" onclick="saveEntry(true)">📅 HAFTALIK</button>
+  </div>
+</div>
+
+<!-- İstatistikler -->
+<div class="sec-title"><span class="dot" style="background:var(--accent)"></span>İSTATİSTİKLER</div>
+<div class="card" style="margin:0 12px">
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-label">Mevcut Değer</div><div class="stat-val" id="stat-current">—</div></div>
+    <div class="stat-box"><div class="stat-label">Toplam K/Z</div><div class="stat-val" id="stat-total-pl">—</div></div>
+    <div class="stat-box"><div class="stat-label">Haftalık</div><div class="stat-val" id="stat-weekly">—</div></div>
+    <div class="stat-box"><div class="stat-label">Aylık</div><div class="stat-val" id="stat-monthly">—</div></div>
+    <div class="stat-box"><div class="stat-label">En Yüksek</div><div class="stat-val" id="stat-high" style="color:var(--green)">—</div></div>
+    <div class="stat-box"><div class="stat-label">Başlangıç</div><div class="stat-val" id="stat-start">—</div></div>
+  </div>
+  <!-- Grafik -->
+  <div class="chart-wrap">
+    <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px">SON 8 GİRİŞ</div>
+    <div class="chart-bars" id="chart-bars"></div>
+    <div class="chart-label" id="chart-labels"></div>
+  </div>
+</div>
+
+<!-- Geçmiş -->
+<div class="sec-title" style="margin-top:16px"><span class="dot" style="background:var(--yellow)"></span>GEÇMİŞ</div>
+<div class="card" style="margin:0 12px">
+  <div id="history-list"><div style="text-align:center;color:var(--muted);padding:20px">Henüz giriş yok</div></div>
+  <button class="btn red" style="margin-top:12px" onclick="clearLast()">🗑 SON GİRİŞİ SİL</button>
+</div>
+
+<button class="fab" onclick="saveEntry()">💾</button>
+
+<script>
+const MANIFEST={name:"BES Takip",short_name:"BES",display:"standalone",background_color:"#0a0c0f",theme_color:"#a78bfa",start_url:"./",icons:[{src:"data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%230a0c0f'/><text x='96' y='130' text-anchor='middle' font-size='110' font-family='serif'>🏦</text></svg>"),sizes:"192x192",type:"image/svg+xml"}]};
+const blob=new Blob([JSON.stringify(MANIFEST)],{type:'application/json'});
+document.getElementById('manifest-link').href=URL.createObjectURL(blob);
+
+let entries=[]; // [{date, value, label}]
+
+window.onload=()=>{loadState();renderAll();};
+window.onbeforeunload=()=>{saveState();};
+
+const fmtTL=n=>Math.round(n).toLocaleString('tr-TR');
+const fmtTL2=n=>n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+function saveEntry(weekly=false){
+  const val=parseFloat(document.getElementById('bes-input').value);
+  if(isNaN(val)||val<=0){triggerAlert('err','Geçerli bir değer girin!');return;}
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const timeStr=now.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+  const label=weekly?`Hafta ${getWeekNum(now)}`:`${dateStr} ${timeStr}`;
+  entries.push({date:now.toISOString(),value:val,label,weekly});
+  document.getElementById('bes-input').value='';
+  saveState();
+  renderAll();
+  triggerAlert('ok',`₺${fmtTL(val)} kaydedildi!`);
+}
+
+function getWeekNum(d){const s=new Date(d.getFullYear(),0,1);return Math.ceil(((d-s)/86400000+s.getDay()+1)/7);}
+
+function clearLast(){
+  if(entries.length===0){triggerAlert('err','Silinecek giriş yok!');return;}
+  entries.pop();saveState();renderAll();triggerAlert('ok','Son giriş silindi');
+}
+
+function renderAll(){
+  if(entries.length===0){
+    document.getElementById('header-total').textContent='—';
+    document.getElementById('last-entry').textContent='Son giriş: —';
+    document.getElementById('history-list').innerHTML='<div style="text-align:center;color:var(--muted);padding:20px">Henüz giriş yok</div>';
+    ['stat-current','stat-total-pl','stat-weekly','stat-monthly','stat-high','stat-start'].forEach(id=>{document.getElementById(id).textContent='—';document.getElementById(id).className='stat-val';});
+    document.getElementById('chart-bars').innerHTML='';
+    document.getElementById('chart-labels').innerHTML='';
+    return;
+  }
+  const cur=entries[entries.length-1].value;
+  const first=entries[0].value;
+  const high=Math.max(...entries.map(e=>e.value));
+
+  // Header
+  document.getElementById('header-total').textContent='₺'+fmtTL(cur);
+  document.getElementById('last-entry').textContent='Son: '+new Date(entries[entries.length-1].date).toLocaleDateString('tr-TR');
+
+  // Stats
+  document.getElementById('stat-current').textContent='₺'+fmtTL(cur);
+  document.getElementById('stat-start').textContent='₺'+fmtTL(first);
+  document.getElementById('stat-high').textContent='₺'+fmtTL(high);
+
+  // Toplam K/Z
+  const totalPL=cur-first,totalPct=first>0?(cur-first)/first*100:0;
+  const tEl=document.getElementById('stat-total-pl');
+  tEl.textContent=`${totalPL>=0?'+':''}${totalPct.toFixed(1)}%`;
+  tEl.className='stat-val '+(totalPL>=0?'pos':'neg');
+
+  // Haftalık
+  const wEl=document.getElementById('stat-weekly');
+  if(entries.length>=2){
+    const prev=entries[entries.length-2].value;
+    const wPL=cur-prev,wPct=prev>0?(cur-prev)/prev*100:0;
+    wEl.textContent=`${wPL>=0?'+':''}${wPct.toFixed(1)}%`;
+    wEl.className='stat-val '+(wPL>=0?'pos':'neg');
+  }else{wEl.textContent='—';wEl.className='stat-val neu';}
+
+  // Aylık (30 gün öncesi)
+  const mEl=document.getElementById('stat-monthly');
+  const monthAgo=new Date();monthAgo.setDate(monthAgo.getDate()-30);
+  const monthEntry=entries.filter(e=>new Date(e.date)<=monthAgo).pop();
+  if(monthEntry){
+    const mPct=(cur-monthEntry.value)/monthEntry.value*100;
+    mEl.textContent=`${mPct>=0?'+':''}${mPct.toFixed(1)}%`;
+    mEl.className='stat-val '+(mPct>=0?'pos':'neg');
+  }else{mEl.textContent='—';mEl.className='stat-val neu';}
+
+  // Grafik
+  const last8=entries.slice(-8);
+  const minV=Math.min(...last8.map(e=>e.value))*0.995;
+  const maxV=Math.max(...last8.map(e=>e.value))*1.005;
+  const range=maxV-minV||1;
+  const bars=document.getElementById('chart-bars');
+  const lbls=document.getElementById('chart-labels');
+  bars.innerHTML=last8.map((e,i)=>{
+    const h=Math.max(4,((e.value-minV)/range*76)).toFixed(1);
+    const isLast=i===last8.length-1;
+    const col=isLast?'var(--accent)':e.value>=(last8[i-1]?.value||0)?'var(--green)':'var(--red)';
+    return `<div class="chart-bar" style="height:${h}px;background:${col};opacity:${isLast?1:0.6}"></div>`;
+  }).join('');
+  lbls.innerHTML=last8.map(e=>{
+    const d=new Date(e.date);
+    return `<span class="chart-lbl">${d.getDate()}/${d.getMonth()+1}</span>`;
+  }).join('');
+
+  // Geçmiş
+  const hist=document.getElementById('history-list');
+  const reversed=[...entries].reverse().slice(0,20);
+  hist.innerHTML=reversed.map((e,i)=>{
+    const prev=entries[entries.length-1-i-1];
+    const chPct=prev?((e.value-prev.value)/prev.value*100):null;
+    const chStr=chPct!==null?`<span class="history-change ${chPct>=0?'pos':'neg'}">${chPct>=0?'+':''}${chPct.toFixed(2)}%</span>`:'';
+    return `<div class="history-row">
+      <div>
+        <div class="history-val" style="color:var(--accent)">₺${fmtTL(e.value)}</div>
+        <div class="history-date">${e.label}</div>
+      </div>
+      ${chStr}
+    </div>`;
+  }).join('');
+}
+
+function saveState(){
+  try{
+    const d=JSON.stringify({entries});
+    try{localStorage.setItem('shannon_bes',d);}catch(e){}
+    try{sessionStorage.setItem('shannon_bes',d);}catch(e){}
+    try{const enc=btoa(unescape(encodeURIComponent(d)));document.cookie='shannon_bes='+enc+';path=/;max-age=31536000;SameSite=Strict';}catch(e){}
+  }catch(e){}
+}
+function loadState(){
+  try{
+    let raw=null;
+    try{raw=localStorage.getItem('shannon_bes');}catch(e){}
+    if(!raw){try{raw=sessionStorage.getItem('shannon_bes');}catch(e){}}
+    if(!raw){try{const m=document.cookie.match(/shannon_bes=([^;]+)/);if(m)raw=decodeURIComponent(escape(atob(m[1])));}catch(e){}}
+    if(!raw)return;
+    const s=JSON.parse(raw);
+    entries=s.entries||[];
+  }catch(e){}
+}
+
+function triggerAlert(type,msg){
+  const b=document.getElementById('alert-banner');
+  document.getElementById('alert-text').textContent=msg;
+  b.className=type;b.style.display='flex';setTimeout(closeAlert,3000);
+}
+function closeAlert(){document.getElementById('alert-banner').style.display='none';}
+</script>
+</body>
+</html>
