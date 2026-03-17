@@ -6,64 +6,44 @@
 <meta name="theme-color" content="#0a0c0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="BES Portföyü">
+<meta name="apple-mobile-web-app-title" content="BES">
 <title>BES Portföyü</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0c0f;--card:#161a1f;--border:#1e2530;--accent:#a78bfa;
-  --green:#00ff88;--red:#ff3860;--yellow:#ffd600;--text:#e0e8f0;--muted:#5a6a7a}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif}
-body{padding-bottom:40px}
-header{background:#0d1117;border-bottom:1px solid var(--accent);padding:14px 16px;
-  box-shadow:0 2px 20px rgba(167,139,250,.15)}
-.h-title{font-size:22px;font-weight:700;letter-spacing:2px;
-  background:linear-gradient(90deg,var(--accent),var(--green));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+:root{--bg:#0a0c0f;--card:#161a1f;--border:#1e2530;--accent:#a78bfa;--green:#00ff88;--red:#ff3860;--text:#e0e8f0;--muted:#5a6a7a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;padding-bottom:40px}
+header{background:#0d1117;border-bottom:1px solid var(--accent);padding:14px 16px}
+.h-title{font-size:22px;font-weight:700;letter-spacing:2px;background:linear-gradient(90deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .h-sub{font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:2px}
-.total-card{margin:16px;background:var(--card);border:1px solid var(--accent);
-  border-radius:16px;padding:20px;text-align:center;position:relative;overflow:hidden}
-.total-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--accent),var(--green))}
+.total-card{margin:16px;background:var(--card);border:1px solid var(--accent);border-radius:16px;padding:20px;text-align:center}
 .total-label{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
-.total-val{font-family:'Share Tech Mono',monospace;font-size:36px;font-weight:700;
-  color:var(--accent);margin:8px 0}
+.total-val{font-family:'Share Tech Mono',monospace;font-size:36px;font-weight:700;color:var(--accent);margin:8px 0}
 .total-change{font-size:14px;font-family:'Share Tech Mono',monospace}
 .input-card{margin:0 16px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
 .inp-label{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
-.inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
-  color:var(--text);font-family:'Share Tech Mono',monospace;font-size:28px;
-  padding:12px;outline:none;-webkit-appearance:none;text-align:center;transition:border-color .2s}
+.inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:28px;padding:12px;outline:none;-webkit-appearance:none;text-align:center}
 .inp:focus{border-color:var(--accent)}
-.btn{width:100%;padding:14px;border-radius:10px;border:none;
-  background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;
-  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:10px}
+.btn{width:100%;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:10px}
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 16px 16px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center}
 .stat-l{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 .stat-v{font-family:'Share Tech Mono',monospace;font-size:15px;margin-top:3px}
 .pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--muted)}
-.sec-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);margin:0 16px 8px;display:flex;align-items:center;gap:8px}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);flex-shrink:0}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin:0 16px 8px}
 .hist-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .hist-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
 .hist-row:last-child{border-bottom:none}
 .hist-date{font-size:12px;color:var(--muted)}
 .hist-val{font-family:'Share Tech Mono',monospace;font-size:15px;color:var(--accent)}
 .hist-ch{font-size:12px;font-family:'Share Tech Mono',monospace}
-.del-btn{background:rgba(255,56,96,.1);border:1px solid var(--red);color:var(--red);
-  border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:'Rajdhani',sans-serif}
-#alert{position:fixed;bottom:20px;left:16px;right:16px;z-index:999;padding:12px 16px;
-  border-radius:10px;font-size:14px;font-weight:700;display:none;
-  align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.del-btn{background:rgba(255,56,96,.1);border:1px solid var(--red);color:var(--red);border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:'Rajdhani',sans-serif}
+#alert{position:fixed;bottom:20px;left:16px;right:16px;z-index:999;padding:12px 16px;border-radius:10px;font-size:14px;font-weight:700;display:none;align-items:center;justify-content:center}
 #alert.ok{background:var(--green);color:#000}
 #alert.err{background:var(--red);color:#fff}
 </style>
 </head>
 <body>
-
 <header>
   <div class="h-title">BES PORTFÖYÜ</div>
   <div class="h-sub" id="last-update">Son giriş: —</div>
@@ -82,12 +62,12 @@ header{background:#0d1117;border-bottom:1px solid var(--accent);padding:14px 16p
 </div>
 
 <div class="stats">
-  <div class="stat"><div class="stat-l">Haftalık</div><div class="stat-v" id="s-weekly">—</div></div>
-  <div class="stat"><div class="stat-l">Aylık</div><div class="stat-v" id="s-monthly">—</div></div>
-  <div class="stat"><div class="stat-l">Toplam</div><div class="stat-v" id="s-total">—</div></div>
+  <div class="stat"><div class="stat-l">Haftalık</div><div class="stat-v neu" id="s-weekly">—</div></div>
+  <div class="stat"><div class="stat-l">Aylık</div><div class="stat-v neu" id="s-monthly">—</div></div>
+  <div class="stat"><div class="stat-l">Toplam</div><div class="stat-v neu" id="s-total">—</div></div>
 </div>
 
-<div class="sec-title"><span class="dot"></span>GEÇMİŞ</div>
+<div class="sec-title">GEÇMİŞ</div>
 <div class="hist-card" id="hist-list">
   <div style="text-align:center;color:var(--muted);padding:24px;font-size:13px">Henüz giriş yok</div>
 </div>
@@ -95,26 +75,23 @@ header{background:#0d1117;border-bottom:1px solid var(--accent);padding:14px 16p
 <div id="alert"><span id="alert-text"></span></div>
 
 <script>
-let entries=[];
+var entries=[];
+window.onload=function(){load();render();};
 
-window.onload=()=>{load();render();};
-
-const fmtTL=n=>n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function fmtTL(n){return n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 
 function saveEntry(){
-  const v=parseFloat(document.getElementById('bes-inp').value);
+  var v=parseFloat(document.getElementById('bes-inp').value);
   if(isNaN(v)||v<=0){showAlert('err','Geçerli bir değer girin!');return;}
-  const now=new Date();
-  entries.push({date:now.toISOString(),value:v});
+  entries.push({date:new Date().toISOString(),value:v});
   document.getElementById('bes-inp').value='';
   save();render();
-  showAlert('ok','₺'+fmtTL(v)+' kaydedildi ✓');
+  showAlert('ok','₺'+fmtTL(v)+' kaydedildi!');
 }
 
 function deleteEntry(i){
   entries.splice(i,1);
   save();render();
-  showAlert('ok','Giriş silindi');
 }
 
 function render(){
@@ -122,91 +99,82 @@ function render(){
     document.getElementById('total-val').textContent='—';
     document.getElementById('total-change').textContent='';
     document.getElementById('last-update').textContent='Son giriş: —';
-    ['s-weekly','s-monthly','s-total'].forEach(id=>{const el=document.getElementById(id);el.textContent='—';el.className='stat-v neu';});
+    document.getElementById('s-weekly').textContent='—';
+    document.getElementById('s-monthly').textContent='—';
+    document.getElementById('s-total').textContent='—';
     document.getElementById('hist-list').innerHTML='<div style="text-align:center;color:var(--muted);padding:24px;font-size:13px">Henüz giriş yok</div>';
     return;
   }
-
-  const cur=entries[entries.length-1].value;
-  const first=entries[0].value;
+  var cur=entries[entries.length-1].value;
+  var first=entries[0].value;
   document.getElementById('total-val').textContent='₺'+fmtTL(cur);
   document.getElementById('last-update').textContent='Son: '+new Date(entries[entries.length-1].date).toLocaleDateString('tr-TR');
 
-  // Değişim
   if(entries.length>=2){
-    const prev=entries[entries.length-2].value;
-    const ch=(cur-prev)/prev*100;
-    const el=document.getElementById('total-change');
+    var prev=entries[entries.length-2].value;
+    var ch=(cur-prev)/prev*100;
+    var el=document.getElementById('total-change');
     el.textContent=(ch>=0?'▲ +':'▼ ')+ch.toFixed(2)+'%';
     el.className='total-change '+(ch>=0?'pos':'neg');
   }
 
-  // İstatistikler
-  const now=new Date();
-  const week=new Date(now);week.setDate(week.getDate()-7);
-  const month=new Date(now);month.setDate(month.getDate()-30);
+  var now=new Date();
+  var week=new Date(now);week.setDate(week.getDate()-7);
+  var month=new Date(now);month.setDate(month.getDate()-30);
+  var wE=null,mE=null;
+  for(var i=0;i<entries.length;i++){
+    if(new Date(entries[i].date)<=week)wE=entries[i];
+    if(new Date(entries[i].date)<=month)mE=entries[i];
+  }
+  setPct('s-weekly',cur,wE?wE.value:null);
+  setPct('s-monthly',cur,mE?mE.value:null);
+  setPct('s-total',cur,first);
 
-  const weekEntry=entries.filter(e=>new Date(e.date)<=week).pop();
-  const monthEntry=entries.filter(e=>new Date(e.date)<=month).pop();
-
-  setStatPct('s-weekly', cur, weekEntry?.value);
-  setStatPct('s-monthly', cur, monthEntry?.value);
-  setStatPct('s-total', cur, first);
-
-  // Geçmiş
-  const hist=document.getElementById('hist-list');
-  hist.innerHTML=[...entries].reverse().map((e,ri)=>{
-    const i=entries.length-1-ri;
-    const prev=entries[i-1];
-    const ch=prev?((e.value-prev.value)/prev.value*100):null;
-    const chStr=ch!==null?`<span class="hist-ch ${ch>=0?'pos':'neg'}">${ch>=0?'+':''}${ch.toFixed(2)}%</span>`:'';
-    const d=new Date(e.date);
-    return `<div class="hist-row">
-      <div>
-        <div class="hist-val">₺${fmtTL(e.value)}</div>
-        <div class="hist-date">${d.toLocaleDateString('tr-TR')} ${d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        ${chStr}
-        <button class="del-btn" onclick="deleteEntry(${i})">Sil</button>
-      </div>
-    </div>`;
-  }).join('');
+  var html='';
+  for(var j=entries.length-1;j>=0;j--){
+    var e=entries[j];
+    var prev2=j>0?entries[j-1]:null;
+    var chStr='';
+    if(prev2){var c2=(e.value-prev2.value)/prev2.value*100;chStr='<span class="hist-ch '+(c2>=0?'pos':'neg')+'">'+(c2>=0?'+':'')+c2.toFixed(2)+'%</span>';}
+    var d=new Date(e.date);
+    html+='<div class="hist-row"><div><div class="hist-val">₺'+fmtTL(e.value)+'</div><div class="hist-date">'+d.toLocaleDateString('tr-TR')+' '+d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})+'</div></div><div style="display:flex;align-items:center;gap:10px">'+chStr+'<button class="del-btn" onclick="deleteEntry('+j+')">Sil</button></div></div>';
+  }
+  document.getElementById('hist-list').innerHTML=html;
 }
 
-function setStatPct(id,cur,prevVal){
-  const el=document.getElementById(id);
-  if(!prevVal){el.textContent='—';el.className='stat-v neu';return;}
-  const pct=(cur-prevVal)/prevVal*100;
-  el.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';
-  el.className='stat-v '+(pct>=0?'pos':'neg');
+function setPct(id,cur,prev){
+  var el=document.getElementById(id);
+  if(!prev){el.textContent='—';el.className='stat-v neu';return;}
+  var p=(cur-prev)/prev*100;
+  el.textContent=(p>=0?'+':'')+p.toFixed(2)+'%';
+  el.className='stat-v '+(p>=0?'pos':'neg');
 }
 
 function save(){
   try{
-    const d=JSON.stringify({entries});
+    var d=JSON.stringify({entries:entries});
     try{localStorage.setItem('bes_portfoy',d);}catch(e){}
     try{sessionStorage.setItem('bes_portfoy',d);}catch(e){}
-    try{const enc=btoa(unescape(encodeURIComponent(d)));document.cookie='bes_portfoy='+enc+';path=/;max-age=31536000;SameSite=Strict';}catch(e){}
+    try{var enc=btoa(unescape(encodeURIComponent(d)));document.cookie='bes_portfoy='+enc+';path=/;max-age=31536000;SameSite=Strict';}catch(e){}
   }catch(e){}
 }
 function load(){
   try{
-    let raw=null;
+    var raw=null;
     try{raw=localStorage.getItem('bes_portfoy');}catch(e){}
     if(!raw){try{raw=sessionStorage.getItem('bes_portfoy');}catch(e){}}
-    if(!raw){try{const m=document.cookie.match(/bes_portfoy=([^;]+)/);if(m)raw=decodeURIComponent(escape(atob(m[1])));}catch(e){}}
+    if(!raw){try{var m=document.cookie.match(/bes_portfoy=([^;]+)/);if(m)raw=decodeURIComponent(escape(atob(m[1])));}catch(e){}}
     if(!raw)return;
-    const s=JSON.parse(raw);
+    var s=JSON.parse(raw);
     entries=s.entries||[];
   }catch(e){}
 }
 
 function showAlert(type,msg){
-  const el=document.getElementById('alert');
+  var el=document.getElementById('alert');
   document.getElementById('alert-text').textContent=msg;
   el.className=type;el.style.display='flex';
-  setTimeout(()=>{el.style.display='none';},3000);
+  setTimeout(function(){el.style.display='none';},3000);
 }
 </script>
 </body>
